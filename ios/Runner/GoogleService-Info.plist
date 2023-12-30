@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBLmTC_03MQZgHju1ZYwCXFv4pSYP3_W9A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>243880766650</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.nimmalasujith.ourFoodie</string>
+	<key>PROJECT_ID</key>
+	<string>ourfoodieapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ourfoodieapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:243880766650:ios:8fc88c50eade8c222c6683</string>
+</dict>
+</plist>
