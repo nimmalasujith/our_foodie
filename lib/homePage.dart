@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
 
@@ -6,16 +6,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:our_foodie/saveData.dart';
-import 'package:our_foodie/search_places.dart';
 import 'package:our_foodie/test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SearchBar.dart';
-import 'auto_complete_result.dart';
-import 'map_services.dart';
 
 final GlobalKey<_HomePageState> HomePageKey = GlobalKey<_HomePageState>();
 
@@ -79,7 +75,9 @@ class _HomePageState extends State<HomePage> {
           infoWindow: InfoWindow(title: ""),
         ),
       );
+      showBottomData = data[index];
     });
+
     HomePageKey.currentState!.changeTab(position);
   }
 
@@ -121,7 +119,11 @@ class _HomePageState extends State<HomePage> {
                     markers: _markers,
                   ),
                 ),
-                if(isTapped)Positioned(child: Container(color: Colors.black54,))
+                if (isTapped)
+                  Positioned(
+                      child: Container(
+                    color: Colors.black54,
+                  ))
               ],
             ),
             if (data.isNotEmpty)
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Colors.white.withOpacity(0.9),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey.withOpacity(0.5),
@@ -237,11 +239,15 @@ class _HomePageState extends State<HomePage> {
                 right: 0,
                 child: SafeArea(
                   child: Container(
-                      margin:
-                          EdgeInsets.only(top: 10, left: 10, right: 10),
+                      margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20),bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20),)),
+                          color: Colors.white.withOpacity(0.9),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                          )),
                       height: 500,
                       width: double.infinity,
                       child: Column(
@@ -260,11 +266,12 @@ class _HomePageState extends State<HomePage> {
                                           contacts: ContactsConvertor(
                                               numbers: [], emails: []),
                                           address: "",
-                                          images:
-                                              Images(otherImages: [], mainImage: ""),
+                                          images: Images(
+                                              otherImages: [], mainImage: ""),
                                           tags: [],
                                           headings: Headings(
-                                              fullHeading: "", shortHeading: ""),
+                                              fullHeading: "",
+                                              shortHeading: ""),
                                           rating: [],
                                           description: "",
                                           reviews: []);
@@ -286,56 +293,133 @@ class _HomePageState extends State<HomePage> {
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        flex:3,
+                                          flex: 3,
                                           child: AspectRatio(
-                                            aspectRatio: 16/9,
+                                            aspectRatio: 16 / 9,
                                             child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               child: Image.network(
-                                                  showBottomData.images.mainImage),
+                                                showBottomData.images.mainImage,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           )),
-                                      SizedBox(width: 3,),
-                                      Expanded(
-                                        child: ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: 3,
-                                            itemBuilder: (context, int index) =>
-                                                AspectRatio(
-                                                  aspectRatio: 16/9,
-                                                  child: Container(
-                                              margin: EdgeInsets.symmetric(vertical: 1),
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(image: NetworkImage(
-                                                          "showBottomData.images.otherImages[index]")),
-                                                      borderRadius: BorderRadius.circular(10),color: Colors.black12
+                                      if (showBottomData
+                                          .images.otherImages.isNotEmpty)
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                      if (showBottomData
+                                          .images.otherImages.isNotEmpty)
+                                        Expanded(
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: 3,
+                                              itemBuilder: (context,
+                                                      int index) =>
+                                                  AspectRatio(
+                                                    aspectRatio: 16 / 9,
+                                                    child: Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 1),
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                  "showBottomData.images.otherImages[index]")),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
+                                                          color:
+                                                              Colors.black12),
                                                     ),
-                                                  ),
-                                                )),
-                                      )
+                                                  )),
+                                        )
                                     ],
                                   ),
                                 ),
-                                Text(showBottomData.headings.fullHeading),
-                                Text(showBottomData.address),
+                                Text(
+                                  showBottomData.headings.shortHeading,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  showBottomData.headings.fullHeading,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  showBottomData.address,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                RatingStars(
+                                  value: 2.5,
+                                  onValueChanged: (v) {
 
+                                  },
+                                  starBuilder: (index, color) => Icon(
+                                    Icons.ac_unit_outlined,
+                                    color: color,
+                                  ),
+                                  starCount: 5,
+                                  starSize: 30,
+                                  valueLabelColor: const Color(0xff9b9b9b),
+                                  valueLabelTextStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                      fontSize: 12.0),
+                                  valueLabelRadius: 10,
+                                  maxValue: 5,
+                                  starSpacing: 2,
+                                  maxValueVisibility: true,
+                                  valueLabelVisibility: true,
+                                  animationDuration: Duration(milliseconds: 1000),
+                                  valueLabelPadding:
+                                  const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                  valueLabelMargin: const EdgeInsets.only(right: 10),
+                                  starOffColor: const Color(0xffe7e8ea),
+                                  starColor: Colors.orange,
+                                )
                               ],
                             ),
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 decoration: BoxDecoration(
                                     color: Colors.greenAccent,
-                                    borderRadius: BorderRadius.circular(20)
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Show Directions",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Icon(Icons.directions)
+                                  ],
                                 ),
-                                child: Row(children: [
-                                  Text("Map Direction "),
-                                  Icon(Icons.directions)
-                                ],),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.greenAccent,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Start",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Icon(Icons.directions)
+                                  ],
+                                ),
                               ),
                             ],
                           ),

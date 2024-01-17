@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
+import 'test page too.dart';
 import 'test.dart';
 
 class SubjectCreator extends StatefulWidget {
@@ -105,13 +107,15 @@ class _SubjectCreatorState extends State<SubjectCreator> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: TextFieldContainer(
                       heading: "Co Ordinates",
                       child: TextFormField(
                         //obscureText: true,
-                        controller: AddressController,
+                        controller: CoOrdinatesController,
                         textInputAction: TextInputAction.next,
                         maxLines: null,
                         style: TextStyle(color: Colors.black, fontSize: 20),
@@ -123,6 +127,14 @@ class _SubjectCreatorState extends State<SubjectCreator> {
                       ),
                     ),
                   ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        CoOrdinatesController.text = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MapScreen()));
+                      },
+                      child: Text("Pick Place"))
                 ],
               ),
               Row(
