@@ -9,20 +9,260 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:our_foodie/saveData.dart';
+import 'package:our_foodie/test%20page%20too.dart';
 import 'package:our_foodie/test.dart';
 
 import 'SearchBar.dart';
 
-final GlobalKey<_HomePageState> HomePageKey = GlobalKey<_HomePageState>();
+final GlobalKey<_MapPageState> HomePageKey = GlobalKey<_MapPageState>();
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: HomePageKey);
+  const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Our Foodie",
+                        style:
+                            TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            size: 15,
+                          ),
+                          Text(
+                            "Bhimavaram",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.blueGrey.shade900,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+              height: 130,
+              width: double.infinity,
+              decoration: BoxDecoration(color: Colors.black12,borderRadius: BorderRadius.circular(10)),
+              child: ClipRRect(borderRadius: BorderRadius.circular(10),child: Stack(
+                children: [
+                  MapScreen(),
+                  Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(11),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.transparent,
+                              Colors.transparent,     Colors.transparent,
+
+
+                              Colors.black26,
+                              Colors.black38,
+                              Colors.black54,
+                              Colors.black87,
+                              Colors.black
+                            ],
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            " Get Foodie... Near By You",
+                            style: TextStyle(color: Colors.white,fontSize: 20),
+                          ),
+                        ),
+                      ))
+                ],
+              )),
+            ),
+            // Center(child: Text("Be a member and earn money from this app")),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: SizedBox(
+                height: 30,
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.03),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.black12)),
+                      margin: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.all(5),
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Icon(Icons.sort),
+                          Text("sort"),
+                          Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                    ),
+                    ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.03),
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(color: Colors.black12)),
+                            margin: EdgeInsets.only(left: 10),
+                            padding: EdgeInsets.all(5),
+                            child: Text("$index foodie"),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Today Try This",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+            ListView.builder(
+                itemCount: 3,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.02),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.black12)),
+                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                    padding: EdgeInsets.all(10),
+                    child: Text("$index foodie"),
+                  );
+                }),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Famous Foodies",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+            ListView.builder(
+                itemCount: 5,
+                physics: NeverScrollableScrollPhysics(),
+
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.02),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.black12)),
+                    margin: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                    padding: EdgeInsets.all(10),
+                    child: Text("$index foodie"),
+                  );
+                }),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                "Categorise",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+            GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // Number of columns
+                crossAxisSpacing: 10, // Spacing between columns
+                mainAxisSpacing: 10, // Spacing between rows
+                childAspectRatio: 1, // Aspect ratio of each grid item
+              ),
+              itemCount: 5,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.02),
+                          borderRadius: BorderRadius.circular(70),
+                          border: Border.all(color: Colors.black12),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                        padding: EdgeInsets.all(10),
+
+                      ),
+                    ),
+                    Text("$index foodie")
+                  ],
+                );
+              },
+            ),
+            SizedBox(height: 100,)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MapPage extends StatefulWidget {
+  MapPage({Key? key}) : super(key: HomePageKey);
+
+  @override
+  _MapPageState createState() => _MapPageState();
+}
+
+class _MapPageState extends State<MapPage> {
   GoogleMapController? _mapController;
 
   void changeTab(LatLng coordinates) {
@@ -354,9 +594,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 RatingStars(
                                   value: 2.5,
-                                  onValueChanged: (v) {
-
-                                  },
+                                  onValueChanged: (v) {},
                                   starBuilder: (index, color) => Icon(
                                     Icons.ac_unit_outlined,
                                     color: color,
@@ -374,10 +612,12 @@ class _HomePageState extends State<HomePage> {
                                   starSpacing: 2,
                                   maxValueVisibility: true,
                                   valueLabelVisibility: true,
-                                  animationDuration: Duration(milliseconds: 1000),
-                                  valueLabelPadding:
-                                  const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                                  valueLabelMargin: const EdgeInsets.only(right: 10),
+                                  animationDuration:
+                                      Duration(milliseconds: 1000),
+                                  valueLabelPadding: const EdgeInsets.symmetric(
+                                      vertical: 2, horizontal: 10),
+                                  valueLabelMargin:
+                                      const EdgeInsets.only(right: 10),
                                   starOffColor: const Color(0xffe7e8ea),
                                   starColor: Colors.orange,
                                 )

@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'auto_complete_result.dart';
 
-final placeResultsProvider = ChangeNotifierProvider<PlaceResults>((ref) {
-  return PlaceResults();
-});
-
-final searchToggleProvider = ChangeNotifierProvider<SearchToggle>((ref) {
-  return SearchToggle();
-});
 
 class PlaceResults extends ChangeNotifier {
   List<AutoCompleteResult> allReturnedResults = [];
