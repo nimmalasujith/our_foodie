@@ -1,21 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:our_foodie/test.dart';
+import 'package:our_foodie/uploader.dart';
 
 import 'test.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+
+
+
+
+
 Future<void> CreateSubject({
-  required String id, required String address, required String coordinates,
+  required String id,
+  required String address,
+  required CoordinatesConvertor coordinates,
   required List<String> tags,
-   bool isUpdate=false,
+  bool isUpdate = false,
   required String places,
-  required Images images,
-  required Headings headings,
+  required FileUploader thumbnail,
+  required Name headings,
   required ContactsConvertor contacts,
   required List<ReviewsConvertor> reviews,
   required String Description,
-
   required List<Rating> ratings,
 }) async {
   final docTrip = FirebaseFirestore.instance
@@ -24,18 +32,17 @@ Future<void> CreateSubject({
       .collection("foodShops")
       .doc(id);
 
-  final tripData = shopDetailsConvertor(
-    id: id,
-    coordinates: coordinates,
-    contacts: contacts,
-    address: address,
-    images: images,
-    tags: tags,
-    rating: ratings,
-    description: Description,
-    reviews: reviews,
-    headings: headings
-  );
+  final tripData = ShopDetailsConvertor(
+      id: id,
+      coordinates: coordinates,
+      contacts: contacts,
+      address: address,
+      thumbnail: thumbnail,
+      tags: tags,
+      rating: ratings,
+      about: Description,
+      reviews: reviews,
+      headings: headings, images: [], createdBy: CreatedByConvertor(name: "", email: ""));
 
   final jsonData = tripData.toJson();
   if (isUpdate) {
@@ -45,101 +52,110 @@ Future<void> CreateSubject({
   }
 }
 
-
-class shopDetailsConvertor {
-  final String id, coordinates, description, address;
-  final Images images;
-  final Headings headings;
+class ShopDetailsConvertor {
+  final String id;
+  final CoordinatesConvertor coordinates;
+  final String about;
+  final String address;
+  final FileUploader thumbnail;
+  final List<FileUploader> images;
+  final Name headings;
+  final CreatedByConvertor createdBy;
   final List<String> tags;
   final List<Rating> rating;
   final List<ReviewsConvertor> reviews;
   final ContactsConvertor contacts;
 
-  shopDetailsConvertor({
+  ShopDetailsConvertor({
     required this.id,
     required this.coordinates,
     required this.contacts,
     required this.address,
+    required this.thumbnail,
     required this.images,
     required this.tags,
+    required this.createdBy,
     required this.headings,
     required this.rating,
-    required this.description,
+    required this.about,
     required this.reviews,
   });
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "coordinates": coordinates,
-    "description": description,
+    "coordinates": coordinates.toJson(),
+    "about": about,
     "address": address,
     "tags": tags,
-    "images": images.toJson(),
+    "createdBy": createdBy.toJson(),
+    "thumbnail": thumbnail.toJson(),
     "rating": rating.map((unit) => unit.toJson()).toList(),
+    "images": images.map((unit) => unit.toJson()).toList(),
     "headings": headings.toJson(),
     "reviews": reviews.map((review) => review.toJson()).toList(),
     "contacts": contacts.toJson(),
   };
 
-  static shopDetailsConvertor fromJson(Map<String, dynamic> json) =>
-      shopDetailsConvertor(
+  static ShopDetailsConvertor fromJson(Map<String, dynamic> json) =>
+      ShopDetailsConvertor(
         id: json['id'] ?? "",
-        coordinates: json['coordinates'] ?? "",
+        coordinates: CoordinatesConvertor.fromJson(json['coordinates'] ?? {}),
         address: json['address'] ?? "",
-        description: json['description'] ?? "",
+        about: json['about'] ?? "",
         tags: List<String>.from(json['tags'] ?? []),
-        images: Images.fromJson(json['images'] ?? {}),
+        thumbnail: FileUploader.fromJson(json['thumbnail'] ?? {}),
+        createdBy: CreatedByConvertor.fromJson(json['createdBy'] ?? {}),
         contacts: ContactsConvertor.fromJson(json['contacts'] ?? {}),
         rating: Rating.fromMapList(json['rating'] ?? []),
-        headings: Headings.fromJson(json['headings'] ?? {}),
+        headings: Name.fromJson(json['headings'] ?? {}),
         reviews: ReviewsConvertor.fromMapList(json['reviews'] ?? []),
+        images: FileUploader.fromMapList(json['images'] ?? []),
       );
 
-  static List<shopDetailsConvertor> fromMapList(List<dynamic> list) {
+  static List<ShopDetailsConvertor> fromMapList(List<dynamic> list) {
     return list.map((item) => fromJson(item)).toList();
   }
 }
 
-class Images {
-  final String mainImage;
-  final List<String> otherImages;
+class CoordinatesConvertor {
+  late  double latitude;
+  late  double longitude;
 
-  Images({
-    required this.otherImages,
-    required this.mainImage,
+  CoordinatesConvertor({
+    required this.latitude,
+    required this.longitude,
   });
 
-  Map<String, dynamic> toJson() => {"otherImages": otherImages, "mainImage": mainImage};
+  Map<String, dynamic> toJson() => {
+    "latitude": latitude,
+    "longitude": longitude,
+  };
 
-  static Images fromJson(Map<String, dynamic> json) =>
-      Images(
-        mainImage: json['mainImage'] ?? "",
-        otherImages: List<String>.from(json["otherImages"] ?? []),
-      );
-
-  static List<Images> fromMapList(List<dynamic> list) {
-    return list.map((item) => fromJson(item)).toList();
-  }
+  static CoordinatesConvertor fromJson(Map<String, dynamic> json) => CoordinatesConvertor(
+    latitude: json['latitude'] ?? 0.0,
+    longitude: json['longitude'] ?? 0.0,
+  );
 }
 
-class Headings {
-  final String shortHeading;
-  final String fullHeading;
 
-  Headings({
-    required this.fullHeading,
-    required this.shortHeading,
+class Name {
+  final String commonName;
+  final String shopName;
+
+  Name({
+    required this.shopName,
+    required this.commonName,
   });
 
-  Map<String, dynamic> toJson() => {"fullHeading": fullHeading, "shortHeading": shortHeading};
+  Map<String, dynamic> toJson() =>
+      {"shopName": shopName, "commonName": commonName};
 
-  static Headings fromJson(Map<String, dynamic> json) =>
-      Headings(
-        shortHeading: json['shortHeading'] ?? "",
-        fullHeading: json["fullHeading"] ?? "",
+  static Name fromJson(Map<String, dynamic> json) => Name(
+        commonName: json['commonName'] ?? "",
+        shopName: json["shopName"] ?? "",
       );
 
-  static List<Headings> fromMapList(List<dynamic> list) {
+  static List<Name> fromMapList(List<dynamic> list) {
     return list.map((item) => fromJson(item)).toList();
   }
 }
@@ -147,25 +163,21 @@ class Headings {
 class Rating {
   final String UserId;
   final double RatingNo;
-  Rating({
 
+  Rating({
     required this.UserId,
     required this.RatingNo,
-
   });
 
   Map<String, dynamic> toJson() => {
-
-    "id": UserId,
-    "RatingNo": RatingNo,
-
-  };
+        "id": UserId,
+        "ratingNo": RatingNo,
+      };
 
   static Rating fromJson(Map<String, dynamic> json) => Rating(
-    UserId: json['id'] ?? "",
-    RatingNo: json['RatingNo'] ?? 0.0,
-    
-  );
+        UserId: json['id'] ?? "",
+        RatingNo: json['ratingNo'] ?? 0.0,
+      );
 
   static List<Rating> fromMapList(List<dynamic> list) {
     return list.map((item) => fromJson(item)).toList();
@@ -194,32 +206,26 @@ class DescriptionAndQuestionConvertor {
   }
 }
 
-
 class ReviewsConvertor {
-  final String id,data;
-
+  final String id, data;
 
   ReviewsConvertor({
     required this.id,
     required this.data,
-  
   });
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "data": data,
-   
-  };
+        "id": id,
+        "data": data,
+      };
 
   static ReviewsConvertor fromJson(Map<String, dynamic> json) =>
       ReviewsConvertor(
         id: json['id'] ?? "",
         data: json['data'] ?? "",
-       
       );
 
-  static List<ReviewsConvertor> fromMapList(
-      List<dynamic> list) {
+  static List<ReviewsConvertor> fromMapList(List<dynamic> list) {
     return list.map((item) => fromJson(item)).toList();
   }
 }
@@ -234,9 +240,9 @@ class ContactsConvertor {
   });
 
   Map<String, dynamic> toJson() => {
-    "numbers": numbers,
-    "emails": emails,
-  };
+        "numbers": numbers,
+        "emails": emails,
+      };
 
   static ContactsConvertor fromJson(Map<String, dynamic> json) =>
       ContactsConvertor(
@@ -249,28 +255,27 @@ class ContactsConvertor {
   }
 }
 
-class subContactsConvertor {
-  final String type;
-  final String data;
+class CreatedByConvertor {
+  final String name;
+  final String email;
 
-  subContactsConvertor({
-    required this.type,
-    required this.data,
+  CreatedByConvertor({
+    required this.name,
+    required this.email,
   });
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "data": data,
-  };
+        "name": name,
+        "email": email,
+      };
 
-  static subContactsConvertor fromJson(Map<String, dynamic> json) =>
-      subContactsConvertor(
-        type: json['type'] ?? "",
-        data: json['data'] ?? "",
+  static CreatedByConvertor fromJson(Map<String, dynamic> json) =>
+      CreatedByConvertor(
+        name: json['name'] ?? "",
+        email: json['email'] ?? "",
       );
 
-  static List<subContactsConvertor> fromMapList(List<dynamic> list) {
+  static List<CreatedByConvertor> fromMapList(List<dynamic> list) {
     return list.map((item) => fromJson(item)).toList();
   }
 }
-

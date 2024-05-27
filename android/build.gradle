@@ -1,4 +1,19 @@
 allprojects {
+    ext.kotlin_version = '1.5.31'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    buildscript {
+        dependencies {
+            classpath 'com.google.gms:google-services:4.4.1'
+            classpath 'com.android.tools.build:gradle:7.3.1'
+
+        }
+    }
+}
+allprojects {
     repositories {
         google()
         mavenCentral()

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "243880766650",
+    "firebase_url": "https://ourfoodieapp-default-rtdb.firebaseio.com",
     "project_id": "ourfoodieapp",
     "storage_bucket": "ourfoodieapp.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.nimmalasujith.our_foodie"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "243880766650-hco6lrphm281do4viml56cfrv3s46964.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nimmalasujith.our_foodie",
+            "certificate_hash": "25524018cfd2ca5c07d276ec01277e71cd525f4b"
+          }
+        },
+        {
+          "client_id": "243880766650-q37q7bbji600qinec8laadj8kg0hb8h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAxUUwq8S0ce4XwmhNRXfmEt8-QfE-Ngb4"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243880766650-q37q7bbji600qinec8laadj8kg0hb8h1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243880766650-itpvtasb2rr7c8qomtemmrlhmmmqtl7c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nimmalasujith.ourFoodie"
+              }
+            }
+          ]
         }
       }
     }

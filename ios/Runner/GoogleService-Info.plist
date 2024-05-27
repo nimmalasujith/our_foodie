@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>243880766650-itpvtasb2rr7c8qomtemmrlhmmmqtl7c.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.243880766650-itpvtasb2rr7c8qomtemmrlhmmmqtl7c</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>243880766650-hco6lrphm281do4viml56cfrv3s46964.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBLmTC_03MQZgHju1ZYwCXFv4pSYP3_W9A</string>
 	<key>GCM_SENDER_ID</key>
@@ -26,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:243880766650:ios:8fc88c50eade8c222c6683</string>
+	<key>DATABASE_URL</key>
+	<string>https://ourfoodieapp-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

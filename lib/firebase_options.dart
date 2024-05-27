@@ -52,6 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '243880766650',
     projectId: 'ourfoodieapp',
     authDomain: 'ourfoodieapp.firebaseapp.com',
+    databaseURL: 'https://ourfoodieapp-default-rtdb.firebaseio.com',
     storageBucket: 'ourfoodieapp.appspot.com',
     measurementId: 'G-QTH4MS3JZ8',
   );
@@ -61,6 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:243880766650:android:14f961ebda2cc9202c6683',
     messagingSenderId: '243880766650',
     projectId: 'ourfoodieapp',
+    databaseURL: 'https://ourfoodieapp-default-rtdb.firebaseio.com',
     storageBucket: 'ourfoodieapp.appspot.com',
   );
 
@@ -69,7 +71,11 @@ class DefaultFirebaseOptions {
     appId: '1:243880766650:ios:8fc88c50eade8c222c6683',
     messagingSenderId: '243880766650',
     projectId: 'ourfoodieapp',
+    databaseURL: 'https://ourfoodieapp-default-rtdb.firebaseio.com',
     storageBucket: 'ourfoodieapp.appspot.com',
+    androidClientId: '243880766650-hco6lrphm281do4viml56cfrv3s46964.apps.googleusercontent.com',
+    iosClientId: '243880766650-itpvtasb2rr7c8qomtemmrlhmmmqtl7c.apps.googleusercontent.com',
     iosBundleId: 'com.nimmalasujith.ourFoodie',
   );
+
 }

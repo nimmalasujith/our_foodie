@@ -15,7 +15,13 @@ dependencies:
   google_maps_flutter:
   lottie:
 
+  csc_picker:
+  http:
+  file_picker:
+  path_provider:
   flutter_polyline_points:
+  google_sign_in:
+  geolocator:
   firebase_core:
   firebase_database:
   firebase_auth:
@@ -26,6 +32,9 @@ dependencies:
   intl:
 
   flutter_rating_stars:
+  url_launcher: ^6.2.6
+  firebase_messaging: ^14.9.2
+  mailer: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -37,3 +46,4 @@ flutter:
   assets:
     - assets/animassets/mapanimation.json
     - assets/mapicons/
+    - assets/states/states_and_cities.json
