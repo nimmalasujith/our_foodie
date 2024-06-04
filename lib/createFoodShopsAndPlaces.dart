@@ -14,18 +14,18 @@ import 'package:our_foodie/uploader.dart';
 import 'test page too.dart';
 import 'test.dart';
 
-class SubjectCreator extends StatefulWidget {
+class SubjectCreater extends StatefulWidget {
   ShopDetailsConvertor? data;
 
-  SubjectCreator({
+  SubjectCreater({
     this.data,
   });
 
   @override
-  State<SubjectCreator> createState() => _SubjectCreatorState();
+  State<SubjectCreater> createState() => _SubjectCreaterState();
 }
 
-class _SubjectCreatorState extends State<SubjectCreator> {
+class _SubjectCreaterState extends State<SubjectCreater> {
   final CommonNameController = TextEditingController();
   final FullHeadingController = TextEditingController();
   final DescriptionController = TextEditingController();

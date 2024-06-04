@@ -132,7 +132,7 @@ class _settingsState extends State<settings> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SubjectCreator()));
+                              builder: (context) => SubjectCreater()));
                     },
                     child: Container(
                       padding: EdgeInsets.only(left: 10),
